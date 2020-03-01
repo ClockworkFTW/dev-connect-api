@@ -1,12 +1,18 @@
 const jwt = require("jsonwebtoken");
 const chalk = require("chalk");
 
+const emptyObj = obj =>
+	Object.entries(obj).length === 0 && obj.constructor === Object
+		? "none"
+		: obj;
+
 const logRequests = (req, res, next) => {
 	const info = chalk.yellow.bold;
 	console.log(info("----INCOMING-REQUEST----"));
+	console.log(info("ROUTE:"), req.url);
 	console.log(info("METHOD:"), req.method);
-	console.log(info("PARAMETERS:"), req.params);
-	console.log(info("BODY:"), req.body);
+	console.log(info("PARAMETERS:"), emptyObj(req.params));
+	console.log(info("BODY:"), emptyObj(req.body));
 	console.log(info("------------------------"));
 	next();
 };

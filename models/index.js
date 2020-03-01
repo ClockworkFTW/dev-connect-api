@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const chalk = require("chalk");
 
+const seedDb = require("./seed");
+
 const connected = chalk.bold.cyan;
 const err = chalk.bold.yellow;
 const disconnected = chalk.bold.red;
@@ -14,6 +16,8 @@ const dbOptions = {
 
 const connectDb = () => {
 	mongoose.connect(dbURL, dbOptions);
+
+	// seedDb();
 
 	mongoose.connection.on("connected", () =>
 		console.log(

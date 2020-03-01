@@ -3,6 +3,8 @@ var mongoose = require("mongoose");
 var projectSchema = new mongoose.Schema({
 	name: String,
 	description: String,
+	difficulty: String,
+	status: String,
 	categories: Array,
 	stack: [{ type: mongoose.Schema.Types.ObjectId, ref: "Stack" }],
 	manager: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

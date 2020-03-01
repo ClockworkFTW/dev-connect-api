@@ -14,13 +14,14 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
 const middleware = require("./middleware");
-
 app.use(middleware.logRequests);
 
 const userRouter = require("./routes/user");
 app.use("/api/user", userRouter);
 const projectRouter = require("./routes/project");
 app.use("/api/project", projectRouter);
+const stackRouter = require("./routes/stack");
+app.use("/api/stack", stackRouter);
 
 app.use(middleware.handleErrors);
 

@@ -8,7 +8,7 @@ const Project = require("../models/project");
 
 projectRouter.get("/", async (req, res, next) => {
 	try {
-		const projects = await Project.find();
+		const projects = await Project.find().populate("manager");
 		res.status(200).json(projects);
 	} catch (error) {
 		next(error);
@@ -17,10 +17,10 @@ projectRouter.get("/", async (req, res, next) => {
 
 projectRouter.post("/", async (req, res, next) => {
 	try {
-		const project = new Project(req.body);
-		project.user = req.userId;
-		await project.save();
-		res.status(200).json(project);
+		const newProject = new Project(req.body);
+		newProject.manager = req.userId;
+		await newProject.save();
+		res.status(200).json(newProject);
 	} catch (error) {
 		next(error);
 	}

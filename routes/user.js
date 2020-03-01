@@ -16,15 +16,18 @@ userRouter.post("/sign-up", async (req, res, next) => {
 
 		const password = await bcrypt.hash(passwordOne, 10);
 
-		const user = new User({
+		const newUser = new User({
 			email,
 			username,
 			password,
 			created: new Date()
 		});
-		await user.save();
+		await newUser.save();
 
-		const token = jwt.sign({ username }, process.env.JWT_SECRET);
+		const token = jwt.sign(
+			{ id: newUser._id, username },
+			process.env.JWT_SECRET
+		);
 
 		res.status(200).json(token);
 	} catch (error) {
@@ -46,7 +49,10 @@ userRouter.post("/sign-in", async (req, res, next) => {
 			return res.status(400).json("incorrect email or password");
 		}
 
-		const token = jwt.sign({ username }, process.env.JWT_SECRET);
+		const token = jwt.sign(
+			{ id: user._id, username },
+			process.env.JWT_SECRET
+		);
 
 		res.status(200).json(token);
 	} catch (error) {

@@ -11,7 +11,8 @@ const dbURL = process.env.DB_HOST;
 const dbOptions = {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
-	useCreateIndex: true
+	useCreateIndex: true,
+	useFindAndModify: false
 };
 
 const connectDb = () => {

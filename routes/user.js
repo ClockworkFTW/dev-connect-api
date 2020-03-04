@@ -46,7 +46,7 @@ userRouter.post("/sign-in", async (req, res, next) => {
 	try {
 		const { username, password } = req.body;
 
-		const user = await User.findOne({ username });
+		const user = await User.findOne({ username }).populate("friends");
 
 		const match = user
 			? await bcrypt.compare(password, user.password)
@@ -86,7 +86,7 @@ userRouter.put("/", middleware.verifyToken, async (req, res, next) => {
 	try {
 		const user = await User.findByIdAndUpdate(req.userId, req.body, {
 			new: true
-		});
+		}).populate("friends");
 
 		const payload = {
 			id: user._id,

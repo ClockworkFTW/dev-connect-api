@@ -19,8 +19,22 @@ projectRouter.post("/", async (req, res, next) => {
 	try {
 		const newProject = new Project(req.body);
 		newProject.manager = req.userId;
+		newProject.created = new Date();
 		await newProject.save();
 		res.status(200).json(newProject);
+	} catch (error) {
+		next(error);
+	}
+});
+
+projectRouter.put("/:id", async (req, res, next) => {
+	try {
+		const updatedProject = await Project.findByIdAndUpdate(
+			req.params.id,
+			req.body,
+			{ new: true }
+		).populate("manager");
+		res.status(200).json(updatedProject);
 	} catch (error) {
 		next(error);
 	}

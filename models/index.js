@@ -9,32 +9,28 @@ const disconnected = chalk.bold.red;
 
 const dbURL = process.env.DB_HOST;
 const dbOptions = {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-	useCreateIndex: true,
-	useFindAndModify: false
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false
 };
 
 const connectDb = () => {
-	mongoose.connect(dbURL, dbOptions);
+  mongoose.connect(dbURL, dbOptions);
 
-	// seedDb();
+  // seedDb();
 
-	mongoose.connection.on("connected", () =>
-		console.log(
-			connected(`Mongoose default connection is open to ${dbURL}`)
-		)
-	);
+  mongoose.connection.on("connected", () =>
+    console.log(connected(`Mongoose default connection is open to ${dbURL}`))
+  );
 
-	mongoose.connection.on("error", error =>
-		console.log(
-			err(`Mongoose default connection has occured ${error} error`)
-		)
-	);
+  mongoose.connection.on("error", error =>
+    console.log(err(`Mongoose default connection has occured ${error} error`))
+  );
 
-	mongoose.connection.on("disconnected", () =>
-		console.log(disconnected("Mongoose default connection is disconnected"))
-	);
+  mongoose.connection.on("disconnected", () =>
+    console.log(disconnected("Mongoose default connection is disconnected"))
+  );
 };
 
 module.exports = { connectDb };
